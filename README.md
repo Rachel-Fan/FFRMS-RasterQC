@@ -51,7 +51,8 @@ The Raster Quality Control Tool is a Python script that helps you compare and an
   The tool generates several output files:
   •	Shapefiles: Shapefiles containing differences in raster extents and cell values. Specifically if one QC check is failed, user can use the result shapefile to visualize the fail spots.
   •	A CSV Report: Detailed reports summarizing the raster properties and comparison results.
- 
+    ![image](https://github.com/Rachel-Fan/FFRMS-RasterQC-Riverine/assets/9139057/df2ea2e6-221e-4354-9c2f-315332a02c02)
+
 - Understanding the Results
     The tool provides pass/fail status for various comparisons, such as extent comparisons (e.g., 00FVA vs. 01FVA) and cell value comparisons. Here's how to interpret the results:
     •	Extent Comparisons: If the tool reports "Pass," it means that the extent of the FVA raster is greater than the second raster. If it reports "Fail," it means the extent of the lower FVA raster is greater.
