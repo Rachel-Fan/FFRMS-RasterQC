@@ -56,7 +56,7 @@ The Raster Quality Control Tool is a Python script that helps you compare and an
 - Understanding the Results
     The tool provides pass/fail status for various comparisons, such as extent comparisons (e.g., 00FVA vs. 01FVA) and cell value comparisons. Here's how to interpret the results:
     •	Extent Comparisons: If the tool reports "Pass," it means that the extent of the FVA raster is greater than the second raster. If it reports "Fail," it means the extent of the lower FVA raster is greater.
-    •	Cell Value Comparisons: If the tool reports "Pass," it means that all cell values from higher FVA raster are higher than the lower FVA raster. If it reports "Fail," it means there are cells of higher           FVA  that are lower than the lower FVA raster.
+    •	Cell Value Comparisons: If the tool reports "Pass," it means that all cell values from higher FVA raster are higher than the lower FVA raster. If it reports "Fail," it means there are cells of higher          FVA  that are lower than the lower FVA raster.
 
 4.	Contact Information
 
