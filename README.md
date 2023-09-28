@@ -61,5 +61,4 @@ The Raster Quality Control Tool is a Python script that helps you compare and an
 4.	Contact Information
 
     For support, feedback, or inquiries about the Raster Quality Control Tool, please contact:
-    •	Name: Rachel Fan
-    •	Email: rachel.fan@stantec.com
+  	Rachel Fan (rachel.fan@stantec.com)
