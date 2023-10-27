@@ -74,7 +74,7 @@ o	A "Fail" indicates that there are cells where the difference in cell values be
 4.  What to self-check when the tool fails?
    •	Check your free space of disk the tool locates. The total size of 5 rasters of my pilot study is less than  1G, however the intermediate files created by the tool takes over 20GB. 
   •  	Close ArcGIS Pro if you opened the raster data or the results data in it. Sometimes removing the data from ArcGIS Pro may not release the lock/
-  •	If the tool is running a second time, ensure the IDLE window (showing your tool results) from your 1st time run is closed. 
+  •	  If the tool is running a second time, ensure the IDLE window (showing your tool results) from your 1st time run is closed. 
 
 5.	Contact Information
 
