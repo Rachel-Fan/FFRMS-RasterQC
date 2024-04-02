@@ -309,18 +309,16 @@ def compareCellvalue(raster0, raster1, raster2, raster3, tempFolder, shapefilesF
 def compareCellvalue02(raster0, raster02, tempFolder, shapefilesFolder):
     """run cell size compare on each raster"""
     try:
-        
-        minus1 = RasterCalculator([raster02, raster0], ["x","y"], "y-x", "UnionOf","FirstOf")
-        #minus1.save(os.path.join(tempFolder, "minus02"))
-
-        reclas02 = arcpy.sa.Reclassify(minus1, "Value", RemapRange([[-1,0.95,1],[0.95,1.05,0],[1.05,10,1]]))
+        # Subtract 00FVA from 0_2PCT (note the change in order from y-x to x-y)
+        difference = RasterCalculator([raster02, raster0], ["x", "y"], "x-y", "UnionOf", "FirstOf")
+        # Reclassify such that positive values become 0, and negative values become 1
+        # Note: The range for negative values does not need to be exact, as values are categorized based on being <0 or >0
+        reclas02 = arcpy.sa.Reclassify(difference, "Value", RemapRange([[-10, 0, 1], [0, 10, 0]]))
         reclas02.save(os.path.join(tempFolder, "reclassify02"))
-        print("4/4 reclassify tasks is finished.")
-        
-        #print("reclassify02 is generated.") 
-    except:
-        print("Could not compare the cell values.")
-    return reclas02  
+        print("Reclassify task for 0_2PCT minus 00FVA is finished.")
+    except Exception as e:
+        print(f"Could not compare the cell values. Error: {e}")
+    return reclas02 
 
 def convertToshp(reclas1, reclas2, reclas3, tempFolder, shapefilesFolder):
     '''convert raster minus result to shapefile using reclassify'''
