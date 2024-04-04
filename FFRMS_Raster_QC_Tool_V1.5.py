@@ -624,72 +624,50 @@ configFile = os.path.join(scriptPath, 'FFRMS_RasterQC_Configuration.xlsx')
 config = retrieveConfig("RasterCompare")
 
 # Assuming the folder path is provided in the config file
-rasters_folder = config['Rasters folder path']['Value']  # Example: "D:/CA_06049_Rasters/"
-#print(rasters_folder)
+rasters_folder = config['Rasters folder path']['Value']
 
-# Get a list of all files in the folder
-all_files = os.listdir(rasters_folder)
-#print(all_files)
-
-#raster_suffix = "CA_06049_10N_00FVA_RIV_03m.tif"
-raster0 = None
-raster1 = None
-raster2 = None
-raster3 = None
-raster02 = None
+# Initialize variables for the rasters
+raster0, raster1, raster2, raster3, raster02 = None, None, None, None, None
 
 # Flag variable to control script execution
 execution_allowed = True
 
+# Get a list of all TIFF files in the folder
 tif_files = [f for f in all_files if f.endswith('.tif')]
-has_0_2PCT_frequency = False
 
-# Process each TIFF file
+# Initialize a dictionary to hold the detected rasters
+detected_rasters = {"00FVA": None, "01FVA": None, "02FVA": None, "03FVA": None, "0_2PCT": None}
+
+# Process each TIFF file to categorize them
 for file in tif_files:
-    try:
-        prefix, studytype, frequency = parse_filename(file)
-    except ValueError as e:
-        print(f"Error processing file '{file}': {e}")
-        execution_allowed = False
-        break
-    
-    # Check for the "0_2PCT" frequency
-    if frequency == "0_2PCT":
-        has_0_2PCT_frequency = True
-        if raster02 is None:
-            raster02 = os.path.join(rasters_folder, file)
-        else:
-            print("Error: Duplicate '0_2PCT' raster found.")
-            execution_allowed = False
-            break
-    else:
-        if '00FVA' in frequency and raster0 is None:
-            raster0 = os.path.join(rasters_folder, file)
-        elif '01FVA' in frequency and raster1 is None:
-            raster1 = os.path.join(rasters_folder, file)
-        elif '02FVA' in frequency and raster2 is None:
-            raster2 = os.path.join(rasters_folder, file)
-        elif '03FVA' in frequency and raster3 is None:
-            raster3 = os.path.join(rasters_folder, file)
+    filename = os.path.basename(file)
+    for key in detected_rasters.keys():
+        if key in filename:
+            if detected_rasters[key] is None:
+                detected_rasters[key] = os.path.join(rasters_folder, file)
+            else:
+                print(f"Error: Duplicate '{key}' raster found.")
+                execution_allowed = False
+                break
 
-# Check for the additional raster02 if the primary rasters are legit
+# Assigning variables based on detection
 if execution_allowed:
-    for file in all_files:
-        if file.endswith('.tif'):
-            if len(file) == len(raster_suffix) + 1:
-                if raster02 is None:
-                    raster02 = os.path.join(rasters_folder, file)
-                else:
-                    print("Error: Duplicate additional raster found. If multiple 0.2 % rasters exist, please ensure unique naming.")
-                    execution_allowed = False
-                    break
+    raster0 = detected_rasters["00FVA"]
+    raster1 = detected_rasters["01FVA"]
+    raster2 = detected_rasters["02FVA"]
+    raster3 = detected_rasters["03FVA"]
+    raster02 = detected_rasters["0_2PCT"]
 
-# If any error was encountered or required rasters are missing, stop further execution
-if not execution_allowed or not all((raster0, raster1, raster2, raster3)):
+# Validate presence of required rasters and report
+if not execution_allowed or not all([raster0, raster1, raster2, raster3]):
     print("Errors encountered or required rasters are missing. Stopping further execution.")
+
 else:
-    print("All required rasters have been read by the tool!")
-    # Extract prefix and study type from an example raster (e.g., raster0)
+    if raster02 is not None:
+        print("All 5 rasters including 0_2PCT tif are successfully read.")
+    else:
+        print("4 rasters are successfully read.")
+
     prefixCSV, studytypeCSV, _ = parse_filename(os.path.basename(raster0))
     print('Prefix is read as '+prefixCSV)
     print('Study Type is read as '+studytypeCSV)
