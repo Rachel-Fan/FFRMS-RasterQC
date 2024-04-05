@@ -64,7 +64,8 @@ def parse_filename(filename):
     if len(parts) < 5:
         raise ValueError("Input raster names are invalid.")
      
-    prefix = parts[0]
+    #prefix = parts[0]
+    prefix = '_'.join(parts[:2])
     studytype = parts[-3][-3:]  # The study type
     frequency = parts[3]  # The frequency is between the 3rd and 4th underscore
     
@@ -131,7 +132,7 @@ def compareExtent(raster0, raster1, raster2, raster3,tempFolder, shapefilesFolde
 
     # Check if there are any records
     if feature_count > 0:
-        diff0_1_sts = "Fail! See " + diffFva0_1 + " in Output folder for details. "
+        diff0_1_sts = "Warning! See " + diffFva0_1 + " in Output folder for details. "
         #Define a parameter to pass this "Pass or Fail" value out of the function, and use it in Function createReport
         print("Warning! FFRMS FVA 1 raster extent is less than WSE raster extent. See diffFva0_1.shp in Output folder for details. ")
     else:
@@ -169,7 +170,7 @@ def compareExtent(raster0, raster1, raster2, raster3,tempFolder, shapefilesFolde
     # Check if there are any records
     if feature_count1 > 0:
         #Define a parameter to pass this "Pass or Fail" value out of the function, and use it in Function createReport
-        diff1_2_sts = "Fail! See " + diffFva1_2 + " in Output folder for details. "
+        diff1_2_sts = "Warning! See " + diffFva1_2 + " in Output folder for details. "
         print("Warning! FFRMS FVA 2 raster extent is less than FFRMS FVA 1 raster extent. See diffFva1_2.shp in Output folder for details. ")#Please refine the wording as needed. 
     else:
         diff1_2_sts = "Pass"
@@ -206,7 +207,7 @@ def compareExtent(raster0, raster1, raster2, raster3,tempFolder, shapefilesFolde
     # Check if there are any records
     if feature_count2 > 0:
         #Define a parameter to pass this "Pass or Fail" value out of the function, and use it in Function createReport
-        diff2_3_sts = "Fail! See " + diffFva2_3 + " in Output folder for details. "
+        diff2_3_sts = "Warning! See " + diffFva2_3 + " in Output folder for details. "
         print("Warning! FFRMS FVA 3 raster extent is less than FFRMS FVA 2 raster extent. See diffFva2_3.shp in Output folder for details. ")#Please refine the wording as needed. 
     else:
         diff2_3_sts = "Pass"
@@ -257,7 +258,7 @@ def compareExtent02(raster0, raster02, tempFolder, shapefilesFolder):
 
     # Check if there are any records
     if feature_count_02 > 0:
-        diff02_0_sts = "Fail! See " + diffFva0_02 + " in Output folder for details. "
+        diff02_0_sts = "Warning! See " + diffFva0_02 + " in Output folder for details. "
         #Define a parameter to pass this "Pass or Fail" value out of the function, and use it in Function createReport
         print("Warning! FFRMS FVA00 raster extent is less than 0.2 PCT raster extent. See diffFva0_02.shp in Output folder for details. ")
     else:
