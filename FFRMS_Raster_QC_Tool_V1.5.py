@@ -5,7 +5,7 @@
 # Author:      Rachel Fan, GISP
 #              rachel.fan@stantec.com
 # Version:     1.5
-# Updated:     11/29/2023
+# Updated:     03/31/2024
 # Created:     09/23/2023
 # Copyright:   (c) rfan2023
 
@@ -18,15 +18,10 @@ import os
 from datetime import datetime, timedelta
 import sys
 import traceback
-import shutil
+
 import re
 import csv
-import glob
-   
-import numpy
-import math
 import time
-import jinja2
 import pandas as pd
 from arcpy.sa import *
 
@@ -625,6 +620,7 @@ config = retrieveConfig("RasterCompare")
 
 # Assuming the folder path is provided in the config file
 rasters_folder = config['Rasters folder path']['Value']
+all_files = os.listdir(rasters_folder)
 
 # Initialize variables for the rasters
 raster0, raster1, raster2, raster3, raster02 = None, None, None, None, None
